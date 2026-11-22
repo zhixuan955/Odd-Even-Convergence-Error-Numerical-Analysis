@@ -7,14 +7,14 @@ Error convergence in a Cox-Ross-Rubinstein binomial tree is not smooth and invol
 
 # Headline results
 All results are for a European call with:
-Initial stock price ($$S0$$) = 100
-Time in years ($$T$$) = 1
-Risk-free rate ($$r$$) = 5%
-Volatility ($$sigma$$) = 20%
-Variable strike price ($$K$$) = 70 to 130
-Variable number of steps ($$N$$) = 1000 - 1999
+- Initial stock price ($$S0$$) = 100
+- Time in years ($$T$$) = 1
+- Risk-free rate ($$r$$) = 5%
+- Volatility ($$sigma$$) = 20%
+- Variable strike price ($$K$$) = 70 to 130
+- Variable number of steps ($$N$$) = 1000 - 1999
 
-- The oscillation is a quadratic in the fractional node position (xi) of the strike’s node at maturity (t = T), with the equation: $$N \times (\text{tree} - \text{BS}) = a(K) + b(K) \times B_2(\xi) \qquad$$ where $$B_2(\xi) = (\xi)^2 - \xi + 1/6$$ and $$B2(x)$$ is the second Bernoulli equation. Iterating through 60 strike prices (excluding $$ K = S0 $$ ) and applying linear least squares regression produced a coefficient of determination ( $$ R^2 #$$ ) > 0.9989 with median 0.9999
+- The oscillation is a quadratic in the fractional node position (xi) of the strike’s node at maturity (t = T), with the equation: $$N \times (\text{tree} - \text{BS}) = a(K) + b(K) \times B_2(\xi) \qquad$$ where $$B_2(\xi) = (\xi)^2 - \xi + 1/6$$ and $$B2(x)$$ is the second Bernoulli equation. Iterating through 60 strike prices (excluding $$K = S0$$ ) and applying linear least squares regression produced a coefficient of determination ( $$R^2$$ ) > 0.9989 with median 0.9999
 
 - The amplitude matches a formula from a heuristic argument. The fitted $$b(K)$$ equals $$-2\sigma \times \sqrt{T} \times g(K)$$ where $$g(K) = K \exp{-r \times T} \phi(d_2)$$, to within 0.1%. (b/g ratio between -0.4003 and -0.3998 and theoretical ratio equal to -0.4)
 
