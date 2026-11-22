@@ -49,6 +49,7 @@ It is intuitive to conclude that increasing N (therefore reducing the size of ea
 In the special case where strike price equals S0, ξ = 0 for even N and ξ = 0.5 for odd N. Scaled error is -1.9995 for even $$N$$ and +1.7528 for odd $$N$$: these are two points of the same curve
 
 **2. Quadratic fit:**
+K = S0 excluded due to ξ only being able to take 2 values
 
 | | Result |
 |---|---|
@@ -57,5 +58,30 @@ In the special case where strike price equals S0, ξ = 0 for even N and ξ = 0.5
 | b/g, min / median / max | −0.4003 / −0.4000 / −0.3998 |
 | Theory (−2σ√T) | −0.4000 |
 
+**3. Effectiveness of the correction method:**
+
+| Absolute error against Black Scholes | Median | 95th percentile | Max |
+|---|---|---|---|
+| Plain tree | 4.35e-04 | 1.35e-03 | 2.44e-03 |
+| Corrected | 1.93e-04 | 4.41e-04 | 6.80e-04 |
+| Improvement | 2.25× | 3.06× | 3.59× |
+
+# Limitations of the Script
+- No out-of-sample test. H2 and its coefficient were identified on the same parameter set (S0 = 100, T = 1, r = 5%, σ = 20%), so the agreement in Results 2 is consistent with the theory but has not been tested independently. Testing other (S0, T, r, σ) combinations is the next step.
+- Heuristic derivation. The amplitude formula comes from a non-rigorous argument and matches the data to about 0.1% on this one parameter set.
+- The smooth term a(K) is not explained. It is visible as the vertical offset in panel (b) and limits the correction to a 2–4× improvement.
+- European calls only, and only N between 1000 and 1999. Nothing here covers American options, puts or smaller N.
+The correction is not a practical pricer for European options. It uses the Black-Scholes density at the strike, so it validates the theory; a European call already has an exact formula.
+
+# Reproducing the Results
+'''
+pip install numpy scipy pandas matplotlib
+python OEandStrikePrice.py
+'''
+
+This outputs two .csv files and one .png file:
+- OE_relation_results.csv (61,000 rows of data entries for $$K$$, $$N$$, ξ and scaled error)
+- OE_fit_results.csv (each row of data entries for $$a$$, $$b$$, $$b/g$$ ratio and $$R^2$$ (coefficient of determination) corresponds to one particular striike price $$K$$)
+- OE_figure.png features the scaled error against ξ scatter plot and the quadratic fit scatter plot
 
 
