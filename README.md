@@ -16,4 +16,8 @@ Variable number of steps ($$N$$) = 1000 - 1999
 
 - The oscillation is a quadratic in the fractional node position (xi) of the strike’s node at maturity (t = T), with the equation: $$N \times (\text{tree} - \text{BS}) = a(K) + b(K) \times B_2(\xi) \qquad$$ where $$B_2(\xi) = (\xi)^2 - \xi + 1/6$$ and $$B2(x)$$ is the second Bernoulli equation. Iterating through 60 strike prices (excluding $$ K = S0 $$ ) and applying linear least squares regression produced a coefficient of determination ( $$ R^2 #$$ ) > 0.9989 with median 0.9999
 
-- The amplitude matches a formula from a heuristic argument. The fitted $$b(K)$$ equals $$-2\sigma \times \sqrt{T} \times g(K)$$ where $$g(K) = K \times \exp{-r \times T} \times \phi(d<sub>2<sub>)$$
+- The amplitude matches a formula from a heuristic argument. The fitted $$b(K)$$ equals $$-2\sigma \times \sqrt{T} \times g(K)$$ where $$g(K) = K \times \exp{-r \times T} \times \phi(d_2)$$, to within 0.1%. (b/g ratio between -0.4003 and -0.3998 and theoretical ratio equal to -0.4)
+
+- Subtracting the predicted term lowers the error at no extra computational cost. This led to median absolute error to shrink 2.25x and the maximum absolute error to shrink 3.59x (table below)
+
+  
