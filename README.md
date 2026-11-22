@@ -1,7 +1,7 @@
 # Odd-Even-Convergence-Error-Numerical-Analysis
 A numerical investigation and statistical analysis of the Odd/Even effect in the Cox-Ross-Rubinstein binomial tree as compared against the closed form Black Scholes Model. 
 
-
+![Scatter plot of scaled error against \xi, scatter plot of scaled error divided by amplitude against $$B_2(\xi)$$](OE_figure.png)
 
 Error convergence in a Cox-Ross-Rubinstein binomial tree is not smooth and involves oscillations up and down depending on whether N is an odd or even number. My goal with this investigation is to show that these oscillations can be mapped predictably onto a function of where the strike sits among the terminal nodes. Furthermore, this script aims to show that the error can be reduced through subtracting a predicted oscillating term at no extra computational cost.
 
