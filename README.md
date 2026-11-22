@@ -67,7 +67,7 @@ K = S0 excluded due to ξ only being able to take 2 values
 | Improvement | 2.25× | 3.06× | 3.59× |
 
 # Limitations of the Script
-- Hypothesis two and the coefficient $$-2\sigma \sqrt{T}$$ were validated on the same parameter set ($$S0 = 100, T = 1, r = 5%, \sigma = 20%$$). There is no out-of-sample test with other combinations of the same parameters, will strengthen the validation.
+- Hypothesis two (H2) and the coefficient $$-2\sigma \sqrt{T}$$ were validated on the same parameter set ($$S0 = 100, T = 1, r = 5%, \sigma = 20%$$). There is no out-of-sample test with other combinations of the same parameters, will strengthen the validation.
 - Heuristic derivation. The amplitude formula comes from a non-rigorous argument and matches the data to about 0.1% on this one parameter set.
 - The smooth term a(K) is not explained. It is visible as the vertical offset in panel (b) and limits the correction to a 2–4× improvement.
 - This only investigates European call options and no focus on American options. The range of values for $$N$$ are limited to between 1000 and 1999. 
