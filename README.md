@@ -67,21 +67,23 @@ K = S0 excluded due to ξ only being able to take 2 values
 | Improvement | 2.25× | 3.06× | 3.59× |
 
 # Limitations of the Script
-- No out-of-sample test. H2 and its coefficient were identified on the same parameter set (S0 = 100, T = 1, r = 5%, σ = 20%), so the agreement in Results 2 is consistent with the theory but has not been tested independently. Testing other (S0, T, r, σ) combinations is the next step.
+- Hypothesis two and the coefficient $$-2\sigma \sqrt{T}$$ were validated on the same parameter set ($$S0 = 100, T = 1, r = 5%, \sigma = 20%$$). There is no out-of-sample test with other combinations of the same parameters, will strengthen the validation.
 - Heuristic derivation. The amplitude formula comes from a non-rigorous argument and matches the data to about 0.1% on this one parameter set.
 - The smooth term a(K) is not explained. It is visible as the vertical offset in panel (b) and limits the correction to a 2–4× improvement.
-- European calls only, and only N between 1000 and 1999. Nothing here covers American options, puts or smaller N.
-The correction is not a practical pricer for European options. It uses the Black-Scholes density at the strike, so it validates the theory; a European call already has an exact formula.
+- This only investigates European call options and no focus on American options. The range of values for $$N$$ are limited to between 1000 and 1999. 
+- The correction is not a practical pricer for European options. It uses the Black-Scholes density at the strike, so it validates the theory; a European call already has an exact formula.
 
 # Reproducing the Results
-'''
+```
 pip install numpy scipy pandas matplotlib
 python OEandStrikePrice.py
-'''
+```
 
 This outputs two .csv files and one .png file:
 - OE_relation_results.csv (61,000 rows of data entries for $$K$$, $$N$$, ξ and scaled error)
 - OE_fit_results.csv (each row of data entries for $$a$$, $$b$$, $$b/g$$ ratio and $$R^2$$ (coefficient of determination) corresponds to one particular striike price $$K$$)
 - OE_figure.png features the scaled error against ξ scatter plot and the quadratic fit scatter plot
 
+# AI-assistant declaration
+This script is assisted by AI for hypothesis suggestions and help in the form of debugging and code review. All forms of code relating to price, fitting and corrections are implemented and their results are validated by me.
 
