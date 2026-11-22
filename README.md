@@ -3,7 +3,7 @@ A numerical investigation and statistical analysis of the Odd/Even effect in the
 
 ![Scatter plot of scaled error against \xi, scatter plot of scaled error divided by amplitude against $$B_2(\xi)$$](OE_figure.png)
 
-Error convergence in a Cox-Ross-Rubinstein binomial tree is not smooth and involves oscillations up and down depending on whether N is an odd or even number. My goal with this investigation is to show that these oscillations can be mapped predictably onto a function of where the strike sits among the terminal nodes. Furthermore, this script aims to show that the error can be reduced through subtracting a predicted oscillating term at no extra computational cost.
+Error convergence in a Cox-Ross-Rubinstein binomial tree is not smooth and involves oscillations up and down depending on whether N is an odd or even number. My goal with this investigation is to show that these oscillations can be mapped predictably onto a function of where the strike sits among the terminal nodes. Furthermore, this script aims to show that a method of correction through which the error can be reduced is through subtracting a predicted oscillating term at no extra computational cost.
 
 # Headline results
 All results are for a European call with:
@@ -31,9 +31,31 @@ It is intuitive to conclude that increasing N (therefore reducing the size of ea
 # Methodology
 **Models:** A Cox-Ross_Rubinstein binomial tree where the up factor ($$u = exp{sigma \sqrt{T}}) and down factor ($$d = 1/u$$) allow the tree to recombine. The model is implemented in the script to adopt two different methods of computing the option price. First is backward induction through the tree, second is a faster equivalent that sums the terminal payoff weighted by the binomial probabilities of $$j$$ number of up movements that occurred during the lifetime of the option. Validation check within the script returned a difference of 2.1e-12 between the two pricing methods across 9 test cases (K = 70, 100, 130; N = 101, 500, 1000). In every practical sense, they agree completely. The script moves forward with the fast version. The Black-Scholes model is used to compute the exact option price that will be compared against in subsequent tests. 
 
-**Fractional Node Position (\xi):** The terminal nodes at maturity ($$t = T$$) on the binomial tree give a stock price of $$S0 exp{(2j - N) \sigma \sqrt{dt}}$$. Taking the strike price to be equal to S0 and solving for the node index of the terminal node, the formula $$j* = 1/2 \times [N + ln(K/S0)/(\sigma \sqrt{dt})]$$, where the fractional part of j* is represented by \xi (when \xi is 0, the node lands exactly on strike price K, otherwise it lies just above or under it). Because \xi depends on $$N$$, using every integer $$N$$ makes \xi sweep through [0, 1).
+**Fractional Node Position (ξ):** The terminal nodes at maturity ($$t = T$$) on the binomial tree give a stock price of $$S0 exp{(2j - N) \sigma \sqrt{dt}}$$. Taking the strike price to be equal to S0 and solving for the node index of the terminal node, the formula $$j* = 1/2 \times [N + ln(K/S0)/(\sigma \sqrt{dt})]$$, where the fractional part of j* is represented by ξ (when ξ is 0, the node lands exactly on strike price K, otherwise it lies just above or under it). Because ξ depends on $$N$$, using every integer $$N$$ makes ξ sweep through [0, 1).
+
+**Error Measure:** Error is scaled by $$N$$ to produce $$scaled error = N \times (tree - BS)$$, where tree and BS represent the option price computed by the binomial tree and Black Scholes models respectively. Scaling by $$N$$ removes the $$1/N$$ shrinkage so values at different $$N$$ can be compared. Scaled error is signed because the binomial tree price oscillates between being larger and being smaller than the Black Scholes price as ξ varies. 
+
+**Hypothesis H1:** Scaled error depends on ξ. This will be validated by computing individual values of scaled error and ξ for every $$N$$ at each strike price, producing a total of 61000 entries of data. A scatter plot will be produced to demonstrate the dependency.
+
+**Hypothesis H2:** For each strike, $$N \times (tree - BS) = a(K) + B(K) \times B_2(ξ)$$, with $$b(K) = -2\sigma \sqrt{T} \times K \exp{-r \times T} \phi(d_2)$$. $$-2\sigma \sqrt{T}$$ is derived from a heuristic Euler-Maclaurin argument:
 
 
+
+
+**Correction:** Corrected price = tree price - $$b(K) \times B_2(ξ)/N$$. This does not depend on any fitted numbers. 
+
+# Results
+**1. Error against ξ:** Across all 61000 data points, scaled error remains in the range between 
+In the special case where strike price equals S0, ξ = 0 for even N and ξ = 0.5 for odd N. Scaled error is -1.9995 for even $$N$$ and +1.7528 for odd $$N$$: these are two points of the same curve
+
+**2. Quadratic fit:**
+
+| | Result |
+|---|---|
+| Strikes fitted | 60 (K = 70 to 130, K = S0 excluded) |
+| R², min / median | 0.9989 / 0.9999 |
+| b/g, min / median / max | −0.4003 / −0.4000 / −0.3998 |
+| Theory (−2σ√T) | −0.4000 |
 
 
 
